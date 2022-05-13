@@ -3,6 +3,7 @@
  */
 package lac.inf.puc.rio.br.scep.database;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,10 +37,10 @@ public class QueryDatabase implements IQueryDatabase
 	private QueryDatabase()
 	{
 		_queries = new ArrayList<Query>();
-		
+
 		
 		Query query = new Query();
-		
+
 		/*
 		query.set_query(readFileAsString("examples/attendingDoctors.rq"));
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
@@ -49,7 +50,7 @@ public class QueryDatabase implements IQueryDatabase
 		query.setProducesTriplesInBlock(false);
 		_queries.add(query);
 		*/
-		
+
 		/*
 		query = new Query();
 		query.set_query(readFileAsString("examples/attendingDoctorsQuery.rq"));
@@ -58,7 +59,7 @@ public class QueryDatabase implements IQueryDatabase
 		query.add_staticDatabase("file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/consultation.rdf");
 		query.setProducesTriplesInBlock(false);
 		_queries.add(query);
-		
+
 		query = new Query();
 		query.set_query(readFileAsString("examples/EstimateProfit.rq"));
 		query.add_inputStreamsByID("Q1O"); // The associated aggregator uses it to create its consumer.
@@ -66,7 +67,7 @@ public class QueryDatabase implements IQueryDatabase
 		query.add_staticDatabase("file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/consultation.rdf");
 		query.setProducesTriplesInBlock(false);
 		_queries.add(query);
-		
+
 		query = new Query();
 		query.set_query(readFileAsString("examples/GenerateReport.rq"));
 		query.add_inputStreamsByID("Q2O"); // The associated aggregator uses it to create its consumer.
@@ -75,58 +76,57 @@ public class QueryDatabase implements IQueryDatabase
 		query.add_staticDatabase("file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/consultation.rdf");
 		query.setProducesTriplesInBlock(false);
 		_queries.add(query);
-		
+
 		query = new Query();
 		query.set_query(readFileAsString("examples/showAllTriples.rq"));
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
-		query.set_queryID(5);	
+		query.set_queryID(5);
 		query.setProducesTriplesInBlock(false);
 		_queries.add(query);
-				
+
 		query = new Query();
 		query.set_query(readFileAsString("examples/testQuery.rq"));
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
-		query.set_queryID(6);		
+		query.set_queryID(6);
 		query.setProducesTriplesInBlock(false);
 		_queries.add(query);*/
-		
+
 		/*
 		query = new Query();
 		query.set_query(readFileAsString("examples/getPeopleCountry.rq"));
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
-		query.set_queryID(1); // antiga 7	
+		query.set_queryID(1); // antiga 7
 		//query.add_staticDatabase("/Users/vitor/git-repository/KAFKA/scep-operator/examples/MusicalArtists.rdf");
-		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");		
+		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
 		query.setProducesTriplesInBlock(true);
-		_queries.add(query);	
+		_queries.add(query);
 		*/
 /*		query = new Query();
 		query.set_query(readFileAsString("examples/getPeopleCountryCS.rq"));
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
-		query.set_queryID(1); // antiga 7	
+		query.set_queryID(1); // antiga 7
 		//query.add_staticDatabase("/Users/vitor/git-repository/KAFKA/scep-operator/examples/MusicalArtists.rdf");
-		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");		
+		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
 		query.setProducesTriplesInBlock(true);
-		_queries.add(query);	*/	
-		
+		_queries.add(query);	*/
+
 /*		query = new Query();
 		query.set_query(readFileAsString("examples/getPeople.rq"));
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
-		query.set_queryID(1); // antiga 7	
+		query.set_queryID(1); // antiga 7
 		//query.add_staticDatabase("/Users/vitor/git-repository/KAFKA/scep-operator/examples/MusicalArtists.rdf");
-		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");		
-		query.setProducesTriplesInBlock(true);
-		_queries.add(query);*/
-		
-/*		query = new Query();
-		query.set_query(readFileAsString("examples/getPeopleCS.rq"));
-		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
-		query.set_queryID(1); // antiga 7	
-		//query.add_staticDatabase("/Users/vitor/git-repository/KAFKA/scep-operator/examples/MusicalArtists.rdf");
-		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");		
+		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
 		query.setProducesTriplesInBlock(true);
 		_queries.add(query);*/
 
+/*		query = new Query();
+		query.set_query(readFileAsString("examples/getPeopleCS.rq"));
+		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
+		query.set_queryID(1); // antiga 7
+		//query.add_staticDatabase("/Users/vitor/git-repository/KAFKA/scep-operator/examples/MusicalArtists.rdf");
+		query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
+		query.setProducesTriplesInBlock(true);
+		_queries.add(query);*/
 
 
 		query = new Query();
@@ -134,6 +134,7 @@ public class QueryDatabase implements IQueryDatabase
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
 		query.set_queryID(12);
 		//query.set_queryToSelectMsgID("select distinct ?msgID WHERE { ?tweet sioc:id ?msgID  } ");
+
 		query.add_staticDatabase("/Users/vitor/git-repository/DSCEP-github/scep-operator/examples/", "beawaros.rdf");
 		//query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
 		query.setProducesTriplesInBlock(true);

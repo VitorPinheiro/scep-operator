@@ -239,9 +239,6 @@ public class Utils
 
 		String appConfigPath = jarDir.getAbsolutePath() + slash + nodeFileName;//"node.properties";
 
-		//System.out.println("VITOR getAggInfoFromConfig");
-		//System.out.println(appConfigPath);
-
 		Properties prop = new Properties();
 
 		try {
