@@ -1,0 +1,77 @@
+REGISTER STREAM SgetPositiveArtists AS
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX owl: <https://www.w3.org/2002/07/owl#>
+PREFIX onto: <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/>
+PREFIX onyx: <http://www.gsi.dit.upm.es/ontologies/onyx/ns#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dbc: <http://dbpedia.org/page/Category:>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX sioc_t: <http://rdfs.org/sioc/types#>
+PREFIX schema: <http://schema.org/>
+PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+PREFIX wna: <http://www.gsi.dit.upm.es/ontologies/wnaffect/ns#>
+CONSTRUCT 
+{
+     ?tweet rdf:type sioc:Post .     
+     ?artistURI ex:hasPositiveTweetCount ?countPositveTweets .
+     ?artistURI ex:hasNegativeTweetCount ?countNegativeTweets .
+}
+FROM STREAM <http://example.org> [RANGE TRIPLES 130]
+WHERE
+{  
+     SERVICE <http://dbpedia.org/sparql> 
+    {
+        ?otherURI rdf:type ?type . 
+        ?artistURI dbo:genre ?p .
+        FILTER (?p IN (dbr:Alternative_rock, dbr:Funk, dbr:Acoustic_music, dbr:Electronic_music, dbr:Pop_music) )
+        FILTER (?type IN (dbo:Website, dbo:TelevisionStation, dbo:TelevisionShow))
+    }
+
+    ?tweet rdf:type sioc:Post .
+    ?tweet schema:mentions ?entity .
+    ?entity nee:hasMatchedURI ?artistURI .      
+
+    ?tweet schema:interactionStatistic ?interactionSet .
+    ?tweet schema:interactionStatistic ?interactionSet2 .
+    ?interactionSet rdf:type schema:InteractionCounter .
+    ?interactionSet schema:interactionType schema:LikeAction .
+    ?interactionSet schema:userInteractionCount ?likeCount .    
+
+    { 
+        SELECT ?artistURI (count(?posNum) as ?countPositveTweets)
+        WHERE 
+        {
+            ?tweet rdf:type sioc:Post .
+            ?tweet onyx:hasEmotionSet ?emotionSet .
+            ?emotionSet onyx:hasEmotion ?positive .
+            ?positive onyx:hasEmotionCategory wna:positive-emotion .
+            ?positive onyx:hasEmotionIntensity ?posNum .
+            ?tweet schema:mentions ?entity .
+            ?entity nee:hasMatchedURI ?artistURI .    
+            FILTER (!contains( str(?posNum), "0.0"))
+        }
+        GROUP BY ?artistURI        
+    }
+    { 
+        SELECT ?artistURI (count(?negNum) as ?countNegativeTweets)
+        WHERE 
+        {
+            ?tweet rdf:type sioc:Post .
+            ?tweet onyx:hasEmotionSet ?emotionSet .
+            ?emotionSet onyx:hasEmotion ?negative .
+            ?negative onyx:hasEmotionCategory wna:negative-emotion .
+            ?negative onyx:hasEmotionIntensity ?negNum .
+            ?tweet schema:mentions ?entity .
+            ?entity nee:hasMatchedURI ?artistURI .    
+            FILTER (!contains( str(?negNum), "0.0"))
+        }
+        GROUP BY ?artistURI        
+    }
+    
+}

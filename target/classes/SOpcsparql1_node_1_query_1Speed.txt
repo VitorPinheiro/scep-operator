@@ -1,0 +1,11 @@
+Execution 1: 1647376651058 1000 37
+Execution 2: 62148 999 40
+Execution 3: 59378 0 38
+Execution 4: 58492 0 103
+Execution 5: 58887 0 0
+Execution 6: 59787 0 0
+Execution 7: 60845 0 0
+Execution 8: 58802 0 40
+Execution 9: 59897 0 0
+Execution 10: 59153 0 47
+Execution 11: 59378 0 0

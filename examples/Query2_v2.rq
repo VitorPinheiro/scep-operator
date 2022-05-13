@@ -1,0 +1,70 @@
+REGISTER STREAM Sbadvibe AS
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX onyx: <http://www.gsi.dit.upm.es/ontologies/onyx/ns#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX schema: <http://schema.org/>
+PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+PREFIX wna: <http://www.gsi.dit.upm.es/ontologies/wnaffect/ns#>
+CONSTRUCT 
+{     
+    ?artist1 ex:hasNegativeTweet ex:true .
+    ?artist1 ex:position "1"^^xsd:integer .
+    ?artist2 ex:contaminatedBy ?artist1 .
+    ?artist2 ex:position "2"^^xsd:integer .
+    ?artist3 ex:contaminatedBy ?artist2 .
+    ?artist3 ex:position "3"^^xsd:integer .
+}
+FROM STREAM <http://example.org> [RANGE 30m TUMBLING]
+FROM <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/MusicalArtists.rdf>
+WHERE
+{  
+    {
+        { 
+            // Detecta um tweet sobre dbr:Demi_Lovato com sentimento negativo.
+            ?tweet1 rdf:type sioc:Post .
+            ?tweet1 dc:created ?date1 .  
+            ?tweet1 onyx:hasEmotionSet ?emotionSet1 .
+            ?tweet1 schema:mentions ?entity1 .
+            ?entity1 nee:hasMatchedURI ?artist1 .  
+            ?artist1 rdf:type dbo:MusicalArtist .              
+            ?emotionSet1 onyx:hasEmotion ?negative .
+            ?negative onyx:hasEmotionCategory wna:negative-emotion .
+            ?negative onyx:hasEmotionIntensity ?negNum .
+            
+            FILTER (!contains( str(?negNum), "0.0"))
+        }
+        { 
+            // Detecta um tweet sobre dbr:Demi_Lovato com pelo menos outro artista diferente          
+            ?tweet2 rdf:type sioc:Post .
+            ?tweet2 dc:created ?date2 .  
+            ?tweet2 schema:mentions ?entity2 .
+            ?tweet2 schema:mentions ?entityOther2 .
+            ?entity2 nee:hasMatchedURI ?artist2 .
+            ?entityOther2 nee:hasMatchedURI ?otherURI2 .
+            ?otherURI2 rdf:type dbo:MusicalArtist .
+            
+            FILTER (?artist2 = ?artist1)
+            FILTER (?artist2 != ?otherURI2)
+        }
+        {
+            // Detect um tweet sobre o artista que foi falado junto com a dbr:Demi_Lovato com outro artista diferente
+            ?tweet3 rdf:type sioc:Post .
+            ?tweet3 dc:created ?date3 .    
+            ?tweet3 schema:mentions ?entity3 .
+            ?tweet3 schema:mentions ?entityOther3 .
+            ?entity3 nee:hasMatchedURI ?artist3 .                
+            ?artist3 rdf:type dbo:MusicalArtist .
+            ?entityOther3 nee:hasMatchedURI ?otherURI3 .
+            ?otherURI3 df:type dbo:MusicalArtist .            
+
+            FILTER (?otherURI2 = ?artist3) 
+            FILTER (?otherURI3 != ?otherURI2)            
+        }
+    }
+    FILTER ( ( ?date1 < ?date2 ) && ( ?date2 < ?date3 ) )        
+}

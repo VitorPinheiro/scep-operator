@@ -1,0 +1,77 @@
+REGISTER STREAM Scomplex AS
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <https://www.w3.org/2002/07/owl#>
+PREFIX onto: <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/>
+PREFIX onyx: <http://www.gsi.dit.upm.es/ontologies/onyx/ns#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dbc: <http://dbpedia.org/page/Category:>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc_t: <http://rdfs.org/sioc/types#>
+PREFIX schema: <http://schema.org/>
+PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+PREFIX wna: <http://www.gsi.dit.upm.es/ontologies/wnaffect/ns#>
+SELECT 
+{     
+    ?likeCount1 ?avgLikeTweets ?likeCount3
+
+}
+FROM STREAM <http://example.org> [RANGE 30m TUMBLING]
+FROM <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/MusicalArtists.rdf>
+WHERE
+{  
+    {
+        { // Detecta um MusicalArtist com numero de Likes maior do que 10
+            ?tweet1 rdf:type sioc:Post .
+            ?tweet1 dc:created ?date1 .  
+            ?tweet1 schema:mentions ?entity1 .
+            ?entity1 nee:hasMatchedURI ?artist1 .    
+            ?artist1 rdf:type dbo:MusicalArtist . 
+            ?tweet1 schema:interactionStatistic ?interactionSet1 .
+            ?interactionSet1 rdf:type schema:InteractionCounter .
+            ?interactionSet1 schema:interactionType schema:LikeAction .
+            ?interactionSet1 schema:userInteractionCount ?likeCount1 .
+
+            FILTER (?likeCount1 > 10)
+        }
+        { 
+            // Calcula o valor médio de likes dentro todos os tweets após o primeiro tweet. A média precisa ser maior do que o valor do primeiro tweet.
+            // Não tem como eu verificar se eles estão aumentando ou diminuindo só com a query, nao tenho memoria            
+            SELECT ?artist2 ?tweet2 ?date2 (avg(?likeCount2) as ?avgLikeTweets) 
+            WHERE 
+            {          
+                ?tweet2 rdf:type sioc:Post .
+                ?tweet2 dc:created ?date2 .  
+                ?tweet2 schema:mentions ?entity2 .
+                ?entity2 nee:hasMatchedURI ?artist2 .    
+                ?artist2 rdf:type dbo:MusicalArtist . 
+                ?tweet2 schema:interactionStatistic ?interactionSet2 .
+                ?interactionSet2 rdf:type schema:InteractionCounter .
+                ?interactionSet2 schema:interactionType schema:LikeAction .
+                ?interactionSet2 schema:userInteractionCount ?likeCount2 .
+            }
+            GROUP BY ?artist2 ?tweet2 ?date2
+        }
+        {
+            // Detecta um tweet com número de likes menor do que o primeiro tweet.
+            ?tweet3 rdf:type sioc:Post .
+            ?tweet3 dc:created ?date3 .  
+            ?tweet3 schema:mentions ?entity3 .
+            ?entity3 nee:hasMatchedURI ?artist3 .    
+            ?artist3 rdf:type dbo:MusicalArtist . 
+            ?tweet3 schema:interactionStatistic ?interactionSet3 .
+            ?interactionSet3 rdf:type schema:InteractionCounter .
+            ?interactionSet3 schema:interactionType schema:LikeAction .
+            ?interactionSet3 schema:userInteractionCount ?likeCount3 .
+
+            FILTER (?likeCount3 < ?likeCount1)
+        }
+    }
+    FILTER (?likeCount1 < ?avgLikeTweets)
+    FILTER ( ( ?date1 < ?date2 ) && ( ?date2 < ?date3 ) )        
+}

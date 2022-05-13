@@ -1,0 +1,633 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://beawaros.org/businfokb#"
+     xml:base="http://beawaros.org/businfokb"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:BEAWaROS="http://beawaros.org/businfokb#">
+    <owl:Ontology rdf:about="http://beawaros.org/businfokb"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasAssociateRegion -->
+
+    <owl:ObjectProperty rdf:about="http://beawaros.org/businfokb#hasAssociateRegion">
+        <rdfs:domain rdf:resource="http://beawaros.org/businfokb#Street"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A regiao associada a uma determinada rua.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasBus -->
+
+    <owl:ObjectProperty rdf:about="http://beawaros.org/businfokb#hasBus">
+        <rdfs:domain rdf:resource="http://beawaros.org/businfokb#BusPath"/>
+        <rdfs:range rdf:resource="http://beawaros.org/businfokb#Bus"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasBusPath -->
+
+    <owl:ObjectProperty rdf:about="http://beawaros.org/businfokb#hasBusPath">
+        <rdfs:domain rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <rdfs:range rdf:resource="http://beawaros.org/businfokb#BusPath"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasBusStop -->
+
+    <owl:ObjectProperty rdf:about="http://beawaros.org/businfokb#hasBusStop">
+        <rdfs:range rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasInitialBusStop -->
+
+    <owl:ObjectProperty rdf:about="http://beawaros.org/businfokb#hasInitialBusStop">
+        <rdfs:domain rdf:resource="http://beawaros.org/businfokb#BusPath"/>
+        <rdfs:range rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasNextBusStop -->
+
+    <owl:ObjectProperty rdf:about="http://beawaros.org/businfokb#hasNextBusStop">
+        <rdfs:domain rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <rdfs:range rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Todo ponto de onibus tem um proximo na sequencia.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasBusNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://beawaros.org/businfokb#hasBusNumber"/>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasContextNetGroup -->
+
+    <owl:DatatypeProperty rdf:about="http://beawaros.org/businfokb#hasContextNetGroup">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Numero do grupo no context net</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://beawaros.org/businfokb#hasDescription">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Descreve qual e este ponto de onibus.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasRegionName -->
+
+    <owl:DatatypeProperty rdf:about="http://beawaros.org/businfokb#hasRegionName">
+        <rdfs:domain rdf:resource="http://beawaros.org/businfokb#Region"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nome da regiao</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://beawaros.org/businfokb#hasStreetName -->
+
+    <owl:DatatypeProperty rdf:about="http://beawaros.org/businfokb#hasStreetName">
+        <rdfs:domain rdf:resource="http://beawaros.org/businfokb#Street"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://beawaros.org/businfokb#Alert -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Alert"/>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Bus -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Bus">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasBusNumber"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusPath -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#BusPath">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasBus"/>
+                <owl:someValuesFrom rdf:resource="http://beawaros.org/businfokb#Bus"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasInitialBusStop"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#BusStop">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasAssociateRegion"/>
+                <owl:someValuesFrom rdf:resource="http://beawaros.org/businfokb#Region"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasBusPath"/>
+                <owl:someValuesFrom rdf:resource="http://beawaros.org/businfokb#BusPath"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasNextBusStop"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasContextNetGroup"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasDescription"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#City -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#City"/>
+    
+
+
+    <!-- http://beawaros.org/businfokb#DangerEvent -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#DangerEvent">
+        <rdfs:subClassOf rdf:resource="http://beawaros.org/businfokb#Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Event -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Event">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasAssociateRegion"/>
+                <owl:someValuesFrom rdf:resource="http://beawaros.org/businfokb#Region"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Flooding -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Flooding">
+        <rdfs:subClassOf rdf:resource="http://beawaros.org/businfokb#DangerEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#GunShots -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#GunShots">
+        <rdfs:subClassOf rdf:resource="http://beawaros.org/businfokb#DangerEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Raid -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Raid">
+        <rdfs:subClassOf rdf:resource="http://beawaros.org/businfokb#DangerEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Region -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Region">
+        <rdfs:subClassOf rdf:resource="http://beawaros.org/businfokb#City"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasRegionName"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Uma regiao é um bairro de uma cidade.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Riot -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Riot">
+        <rdfs:subClassOf rdf:resource="http://beawaros.org/businfokb#DangerEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Street -->
+
+    <owl:Class rdf:about="http://beawaros.org/businfokb#Street">
+        <rdfs:subClassOf rdf:resource="http://beawaros.org/businfokb#City"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://beawaros.org/businfokb#hasStreetName"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://beawaros.org/businfokb#Bus117 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#Bus117">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#Bus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusPath117 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusPath117">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusPath"/>
+        <hasBus rdf:resource="http://beawaros.org/businfokb#Bus117"/>
+        <hasBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_001"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_001 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_001">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#CosmeVelho"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_002"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117001</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rodoviária do Cosme Velho - R. Cosme Velho - Cosme Velho, Rio de Janeiro - RJ</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_002 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_002">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#CosmeVelho"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_003"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117002</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cosme Velho, Rio de Janeiro - RJ, 22241-125 (Ponto da Rua cosme velho com Rua Ererê)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_003 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_003">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#CosmeVelho"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_004"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117003</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R. Cosme Velho, 155 - Cosme Velho, Rio de Janeiro - RJ, 22241-125 (Em frente a faculdade Cesgranrio)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_004 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_004">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_005"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117004</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Ponto da Rua das Laranjeiras com Rua Rumania)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_005 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_005">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_006"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117005</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Rua das laranjeiras em frente ao Supermercado Princesa)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_006 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_006">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_007"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117006</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Rua das laranjeiras em frente a Escola Municipal Jose de Alencar)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_007 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_007">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_008"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117007</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 22240-004 (Ponto da Rua das Laranjeiras com Rua Soares Cabral)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_008 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_008">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_009"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117008</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 22240-004 (Rua Ipiranga)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_009 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_009">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Centro"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_010"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117009</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Centro, Rio de Janeiro - RJ, 20211-130 (Ponto da Rua Benedito Hipólito com Rua Marquês de Pombal)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_010 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_010">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Centro"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_011"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117010</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Centro, Rio de Janeiro - RJ, 20230-193 (Rua General Caldwell próximo a faculdade UNIESP)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_011 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_011">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Centro"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_012"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117011</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Centro, Rio de Janeiro - RJ, 20211-340 (Rua Moncorvo Filho, próximo ao hospital maternidade Maria Amélia)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_012 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_012">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Centro"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_013"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117012</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Av. Pres. Vargas, 1788-1904 - Cidade Nova, Rio de Janeiro - RJ, 20210-031 (Próximo a estação de metro Central)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_013 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_013">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_014"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117013</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 22240-060 (Ponto da Rua das Laranjeiras próximo a rua Pereira da Silva)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_014 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_014">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_015"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117014</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Ponto da Rua das Laranjeiras próximo a rua Leite Leal)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_015 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_015">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_016"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117015</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laranjeiras, Rio de Janeiro - RJ, 23823-040 (Ponto da Rua das Laranjeiras com Rua Cardoso Junior)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_016 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_016">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_017"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117016</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R. das Laranjeiras, 486 - Laranjeiras, Rio de Janeiro - RJ, 22240-006 (Em frente ao centro educacional Mira Flores)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_017 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_017">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_018"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117017</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R. das Laranjeiras, 540 - Cosme Velho, Rio de Janeiro - RJ, 22240-006 (Próximo a rua cosme velho)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_018 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_018">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#CosmeVelho"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#BusStop117_019"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117018</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R. Cosme Velho, 88-216 - Cosme Velho, Rio de Janeiro - RJ, 22241-090 (Esquina com rua Mal. Pires Ferreira)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#BusStop117_019 -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#BusStop117_019">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#CosmeVelho"/>
+        <hasBusPath rdf:resource="http://beawaros.org/businfokb#BusPath117"/>
+        <hasNextBusStop rdf:resource="http://beawaros.org/businfokb#Nil"/>
+        <hasContextNetGroup rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117019</hasContextNetGroup>
+        <hasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R. Cosme Velho, 430 - Cosme Velho, Rio de Janeiro - RJ, 22241-090 (Ponto da Rua cosme velho com Rua Ererê)</hasDescription>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Centro -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#Centro">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#Region"/>
+        <hasRegionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Centro</hasRegionName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#CosmeVelho -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#CosmeVelho">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#Region"/>
+        <hasRegionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cosme Velho</hasRegionName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#FloodingLarangeiras -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#FloodingLarangeiras">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#Flooding"/>
+        <hasAssociateRegion rdf:resource="http://beawaros.org/businfokb#Larangeiras"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Larangeiras -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#Larangeiras">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#Region"/>
+        <hasRegionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Larangeiras</hasRegionName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://beawaros.org/businfokb#Nil -->
+
+    <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#Nil">
+        <rdf:type rdf:resource="http://beawaros.org/businfokb#BusStop"/>
+        <rdfs:comment>Se p ponto de onibus tem esse ponto como proximo, ele é o ponto final.</rdfs:comment>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

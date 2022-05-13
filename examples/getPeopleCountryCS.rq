@@ -1,0 +1,44 @@
+REGISTER STREAM SgetPeopleCountry AS
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <https://www.w3.org/2002/07/owl#>
+PREFIX onto: <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/>
+PREFIX onyx: <http://www.gsi.dit.upm.es/ontologies/onyx/ns#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dbc: <http://dbpedia.org/page/Category:>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc_t: <http://rdfs.org/sioc/types#>
+PREFIX schema: <http://schema.org/>
+PREFIX gn: <http://www.geonames.org/ontology#>
+PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+PREFIX wna: <http://www.gsi.dit.upm.es/ontologies/wnaffect/ns#>
+CONSTRUCT {?tweet rdf:type sioc:Post .
+    ?tweet sioc:id ?id .
+    ?tweet dc:created ?datetime .
+    ?tweet schema:mentions ?entity .
+    ?entity nee:hasMatchedURI ?personURI .    
+    ?entity ex:hasName ?name .
+    ?personURI rdf:type dbo:MusicalArtist .
+    ?personURI dbo:birthPlace ?birthPlace .
+    ?personURI dbo:country ?country .
+    ?country dbp:countryCode ?countryCode .}
+FROM STREAM <http://example.org> [RANGE TRIPLES 1000]
+FROM <file:///opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf>
+WHERE
+{   
+    ?personURI rdf:type dbo:MusicalArtist . 
+    ?personURI dbo:birthPlace ?birthPlace .
+    ?birthPlace dbo:country ?country .   
+    ?country dbp:countryCode ?countryCode .      
+    ?tweet rdf:type sioc:Post .
+    ?tweet sioc:id ?id .
+    ?tweet dc:created ?datetime . 
+    ?tweet schema:mentions ?entity .
+    ?entity nee:hasMatchedURI ?personURI .    
+    ?entity nee:detectedAs ?name .
+}

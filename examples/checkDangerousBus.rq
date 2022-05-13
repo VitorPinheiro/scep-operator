@@ -1,0 +1,25 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX beawaros: <http://beawaros.org/businfokb#>
+CONSTRUCT {
+    ?bus sioc:id ?busNumber .
+    ?bus beawaros:hasDangerousEvent ?description .
+    ?dangerEvent beawaros:hasAssociateRegion ?region .
+    ?dangerEvent rdf:type ?eventType .}
+FROM STREAM <http://example.org> [RANGE TRIPLES 1]
+FROM <file:///Users/vitor/git-repository/DSCEP/scep-operator/examples/beawaros.rdf>
+WHERE
+{   
+    ?bus beawaros:hasBusNumber ?busNumber .
+    ?bus beawaros:aproximating ?busStop .
+    ?bus rdf:type beawaros:bus .
+
+    ?busPath beawaros:hasBus ?bus .  
+    ?busPath rdf:type beawaros:BusPath .
+    ?busPath beawaros:hasAssociateRegion ?region .
+    
+    ?dangerEvent beawaros:hasAssociateRegion ?region .
+    ?dangerEvent rdf:type ?eventType .
+    ?dangerEvent beawaros:hasDescription ?description .
+}

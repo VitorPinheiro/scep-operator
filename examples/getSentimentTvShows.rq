@@ -1,0 +1,79 @@
+REGISTER STREAM SgetSentimentTVShows AS
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX owl: <https://www.w3.org/2002/07/owl#>
+PREFIX onto: <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/>
+PREFIX onyx: <http://www.gsi.dit.upm.es/ontologies/onyx/ns#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dbc: <http://dbpedia.org/page/Category:>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX sioc_t: <http://rdfs.org/sioc/types#>
+PREFIX schema: <http://schema.org/>
+PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+PREFIX wna: <http://www.gsi.dit.upm.es/ontologies/wnaffect/ns#>
+CONSTRUCT 
+{
+     ?tweet rdf:type sioc:Post .     
+     ?artistURI ex:hasPositiveTweetCount ?countPositveTweets .
+     ?artistURI ex:positivelyRelatesWith ?otherURI .
+     ?artistURI dbo:genre ?genre .
+     ?artistURI rdf:type dbo:TelevisionShow .
+     ?artistURI2 ex:hasNegativeTweetCount ?countNegativeTweets .
+     ?artistURI2 ex:nagativelyRelatesWith ?otherURI2 .
+     ?artistURI2 dbo:genre ?genre2 .
+     ?artistURI2 rdf:type dbo:TelevisionShow .
+}
+FROM STREAM <http://example.org> [RANGE TRIPLES 130]
+WHERE
+{  
+           
+    { 
+        SELECT ?artistURI ?tweet ?otherURI ?genre (count(?posNum) as ?countPositveTweets) 
+        WHERE 
+        {                      
+            ?tweet rdf:type sioc:Post .
+            ?tweet onyx:hasEmotionSet ?emotionSet .
+            ?tweet schema:mentions ?entity .
+            ?tweet schema:mentions ?entityOther .
+            ?entity nee:hasMatchedURI ?artistURI .    
+            ?artistURI rdf:type dbo:TelevisionShow . 
+            ?artistURI dbo:genre ?genre .
+            ?emotionSet onyx:hasEmotion ?positive .
+            ?positive onyx:hasEmotionCategory wna:positive-emotion .
+            ?positive onyx:hasEmotionIntensity ?posNum .
+            ?entityOther nee:hasMatchedURI ?otherURI .
+            ?otherURI ex:type ex:isNotTelevisionShow .
+            
+            FILTER (!contains( str(?posNum), "0.0"))
+        }
+        GROUP BY ?artistURI ?tweet ?otherURI ?genre 
+    }
+    { 
+        SELECT ?artistURI2 ?tweet2 ?otherURI2 ?genre2 (count(?negNum) as ?countNegativeTweets) 
+        WHERE 
+        {          
+            ?tweet2 rdf:type sioc:Post .
+            ?tweet2 onyx:hasEmotionSet ?emotionSet2 .
+            ?tweet2 schema:mentions ?entity2 .
+            ?tweet2 schema:mentions ?entityOther2 .
+            ?entity2 nee:hasMatchedURI ?artistURI2 .                
+            ?artistURI2 rdf:type dbo:TelevisionShow .     
+            ?artistURI2 dbo:genre ?genre2 .        
+            ?emotionSet2 onyx:hasEmotion ?negative .
+            ?negative onyx:hasEmotionCategory wna:negative-emotion .
+            ?negative onyx:hasEmotionIntensity ?negNum .
+            ?entityOther2 nee:hasMatchedURI ?otherURI2 .
+            ?otherURI2 ex:type ex:isNotTelevisionShow .
+
+            
+            FILTER (!contains( str(?negNum), "0.0"))
+        }
+        GROUP BY ?artistURI2 ?tweet2 ?otherURI2 ?genre2      
+    }
+    
+}

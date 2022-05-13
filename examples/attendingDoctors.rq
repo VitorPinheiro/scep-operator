@@ -1,0 +1,33 @@
+REGISTER STREAM SAttendingDoctors AS
+PREFIX ex: <http://example.org/>
+PREFIX onto: <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/>
+CONSTRUCT {?doctor ex:attended ?patient .
+          ?patient ex:wasIn ?room_type}
+FROM STREAM <http://example.org> [RANGE TRIPLES 16]
+FROM <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/consultation.rdf>
+WHERE
+{
+    {
+        {
+            {
+                ?a ex:enters ?a_room .
+                ?a ex:isDoctor ex:Hospital
+                BIND (?a AS ?doctor)
+                BIND (?a_room AS ?doctor_room)
+            }
+            {
+                ?b ex:enters ?b_room .
+                ?b ex:isPatient ex:Hospital
+                BIND (?b AS ?patient)
+                BIND (?b_room AS ?patient_room)
+            }
+            FILTER (?doctor_room=?patient_room)
+        }
+        ?c ex:leaves ?c_room .
+        ?c ex:isPatient ?c_hospital .
+        ?patient_room ex:isAllocatedAs ?room_type
+        BIND (?c AS ?B2)
+        BIND (?c_room AS ?B2_room)
+    }
+    FILTER (?patient=?B2 && ?patient_room=?B2_room)
+}

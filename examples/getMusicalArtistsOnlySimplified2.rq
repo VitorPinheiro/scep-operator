@@ -1,0 +1,84 @@
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <https://www.w3.org/2002/07/owl#>
+PREFIX onto: <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/>
+PREFIX onyx: <http://www.gsi.dit.upm.es/ontologies/onyx/ns#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dbc: <http://dbpedia.org/page/Category:>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc_t: <http://rdfs.org/sioc/types#>
+PREFIX schema: <http://schema.org/>
+PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+PREFIX wna: <http://www.gsi.dit.upm.es/ontologies/wnaffect/ns#>
+CONSTRUCT {?tweet rdf:type sioc:Post .
+    ?tweet sioc:id ?id .
+    ?tweet dc:created ?datetime .
+    ?tweet sioc:has_creator ?postCreator .
+    ?tweet onyx:hasEmotionSet ?emotionSet .
+    ?tweet schema:interactionStatistic ?interactionSet .
+    ?tweet schema:interactionStatistic ?interactionSet2 .
+    ?interactionSet rdf:type schema:InteractionCounter .
+    ?interactionSet schema:interactionType schema:LikeAction .
+    ?interactionSet schema:userInteractionCount ?likeCount .    
+    ?interactionSet2 rdf:type schema:InteractionCounter .
+    ?interactionSet2 schema:interactionType schema:ShareAction .
+    ?interactionSet2 schema:userInteractionCount ?shareCount .
+    ?emotionSet rdf:type onyx:EmotionSet .
+    ?emotionSet onyx:hasEmotion ?positive .
+    ?positive onyx:hasEmotionCategory wna:positive-emotion .
+    ?positive onyx:hasEmotionIntensity ?posNum .
+    ?artistURI ex:hasPositiveNumber ?posNum .
+    ?emotionSet onyx:hasEmotion ?negative .
+    ?negative onyx:hasEmotionCategory wna:negative-emotion .
+    ?negative onyx:hasEmotionIntensity ?negNum .
+    ?tweet schema:mentions ?entity .
+    ?entity nee:hasMatchedURI ?artistURI .
+    ?artistURI dbo:genre ?genre .
+    ?artistURI rdf:type dbo:MusicalArtist .
+    ?entity ex:hasName ?name .
+    ?tweet schema:mentions ?TagClass .
+    ?TagClass rdf:type sioc_t:Tag .
+    ?TagClass rdfs:label ?tag .
+    ?tweet schema:mentions ?UserAcc .
+    ?UserAcc rdf:type sioc:UserAccount .
+    ?UserAcc sioc:name ?userName .}
+FROM STREAM <http://example.org> [RANGE TRIPLES 2000]
+FROM <file:///Users/vitor/git-repository/DSCEP/scep-operator/examples/MusicalArtists.rdf>
+WHERE
+{   
+    ?artistURI rdf:type dbo:MusicalArtist . 
+    ?artistURI dbo:genre ?genre .
+    ?tweet rdf:type sioc:Post .
+    ?tweet sioc:id ?id .
+    ?tweet dc:created ?datetime .
+    ?tweet sioc:has_creator ?postCreator .
+    ?tweet onyx:hasEmotionSet ?emotionSet .
+    ?tweet schema:interactionStatistic ?interactionSet .
+    ?tweet schema:interactionStatistic ?interactionSet2 .
+    ?interactionSet rdf:type schema:InteractionCounter .
+    ?interactionSet schema:interactionType schema:LikeAction .
+    ?interactionSet schema:userInteractionCount ?likeCount .    
+    ?interactionSet2 rdf:type schema:InteractionCounter .
+    ?interactionSet2 schema:interactionType schema:ShareAction .
+    ?interactionSet2 schema:userInteractionCount ?shareCount .       
+    ?emotionSet onyx:hasEmotion ?positive .
+    ?positive onyx:hasEmotionCategory wna:positive-emotion .
+    ?positive onyx:hasEmotionIntensity ?posNum .
+    ?emotionSet onyx:hasEmotion ?negative .
+    ?negative onyx:hasEmotionCategory wna:negative-emotion .
+    ?negative onyx:hasEmotionIntensity ?negNum .     
+    ?tweet schema:mentions ?entity .
+    ?entity nee:hasMatchedURI ?artistURI .    
+    ?entity nee:detectedAs ?name .
+    OPTIONAL { ?tweet schema:mentions ?TagClass }
+    OPTIONAL { ?TagClass rdf:type sioc_t:Tag }
+    OPTIONAL { ?TagClass rdfs:label  ?tag }
+    OPTIONAL { ?tweet schema:mentions ?UserAcc }
+    OPTIONAL { ?UserAcc rdf:type sioc:UserAccount }
+    OPTIONAL { ?UserAcc sioc:name ?userName }
+}

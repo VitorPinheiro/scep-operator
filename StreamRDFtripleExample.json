@@ -1,0 +1,103 @@
+{
+    "ID": "bb103877-8335-444a-be5f-db8d916f6754_IS1_0",
+    "Producer": "IS1",
+    "isTwitterDB": "false",
+    "Triples": [
+        {
+            "Subject": "http://example.org/Doctor1",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room1",
+            "Timestamp": 0
+        },
+        {
+            "Subject": "http://example.org/Patient2",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room2",
+            "Timestamp": 61000
+        },
+        {
+            "Subject": "http://example.org/Patient1",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room1",
+            "Timestamp": 122000
+        },
+        {
+            "Subject": "http://example.org/Doctor2",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room2",
+            "Timestamp": 183000
+        },
+        {
+            "Subject": "http://example.org/Doctor4",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room3",
+            "Timestamp": 244000
+        },
+        {
+            "Subject": "http://example.org/Patient2",
+            "Predicate": "http://example.org/leaves",
+            "Object": "http://example.org/Room2",
+            "Timestamp": 305000
+        },
+        {
+            "Subject": "http://example.org/Patient3",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room3",
+            "Timestamp": 366000
+        },
+        {
+            "Subject": "http://example.org/Doctor2",
+            "Predicate": "http://example.org/leaves",
+            "Object": "http://example.org/Room2",
+            "Timestamp": 903000
+        },
+        {
+            "Subject": "http://example.org/Doctor2",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room2",
+            "Timestamp": 1083000
+        },
+        {
+            "Subject": "http://example.org/Patient4",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room2",
+            "Timestamp": 1146000
+        },
+        {
+            "Subject": "http://example.org/Patient3",
+            "Predicate": "http://example.org/leaves",
+            "Object": "http://example.org/Room3",
+            "Timestamp": 1234000
+        },
+        {
+            "Subject": "http://example.org/Patient1",
+            "Predicate": "http://example.org/leaves",
+            "Object": "http://example.org/Room1",
+            "Timestamp": 1771000
+        },
+        {
+            "Subject": "http://example.org/Patient4",
+            "Predicate": "http://example.org/leaves",
+            "Object": "http://example.org/Room2",
+            "Timestamp": 2356000
+        },
+        {
+            "Subject": "http://example.org/25",
+            "Predicate": "http://example.org/enters",
+            "Object": "http://example.org/Room22",
+            "Timestamp": 2424000
+        },
+        {
+            "Subject": "http://example.org/26",
+            "Predicate": "http://example.org/leaves",
+            "Object": "http://example.org/Room33",
+            "Timestamp": 2485000
+        },
+        {
+            "Subject": "http://example.org/27",
+            "Predicate": "http://example.org/leaves",
+            "Object": "http://example.org/Room11",
+            "Timestamp": 2546000
+        }
+    ]
+}
