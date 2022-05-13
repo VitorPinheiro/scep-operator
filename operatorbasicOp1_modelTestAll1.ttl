@@ -1,0 +1,319 @@
+@prefix :      <http://beawaros.org/businfokb#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix beawaros: <http://beawaros.org/businfokb#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+beawaros:hasContextNetGroup
+        a             owl:DatatypeProperty ;
+        rdfs:comment  "Numero do grupo no context net"^^xsd:string .
+
+beawaros:hasBusNumber
+        a       owl:DatatypeProperty .
+
+beawaros:BusStop117_013
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117013"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 22240-060 (Ponto da Rua das Laranjeiras próximo a rua Pereira da Silva)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_014 .
+
+<http://beawaros.org/businfokb>
+        a       owl:Ontology .
+
+beawaros:DangerEvent  a  owl:Class ;
+        rdfs:subClassOf  beawaros:Event .
+
+beawaros:Riot  a         owl:Class ;
+        rdfs:subClassOf  beawaros:DangerEvent .
+
+beawaros:Alert  a  owl:Class .
+
+beawaros:BusStop117_005
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117005"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Rua das laranjeiras em frente ao Supermercado Princesa)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_006 .
+
+beawaros:BusStop117_018
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:CosmeVelho ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117018"^^xsd:string ;
+        beawaros:hasDescription      "R. Cosme Velho, 88-216 - Cosme Velho, Rio de Janeiro - RJ, 22241-090 (Esquina com rua Mal. Pires Ferreira)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_019 .
+
+beawaros:Event  a        owl:Class ;
+        rdfs:subClassOf  [ a                   owl:Restriction ;
+                           owl:onProperty      beawaros:hasAssociateRegion ;
+                           owl:someValuesFrom  beawaros:Region
+                         ] .
+
+beawaros:BusStop117_012
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Centro ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117012"^^xsd:string ;
+        beawaros:hasDescription      "Av. Pres. Vargas, 1788-1904 - Cidade Nova, Rio de Janeiro - RJ, 20210-031 (Próximo a estação de metro Central)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_013 .
+
+beawaros:hasStreetName
+        a            owl:DatatypeProperty ;
+        rdfs:domain  beawaros:Street .
+
+beawaros:Bus  a          owl:Class ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            beawaros:hasBusNumber ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] .
+
+beawaros:Street  a       owl:Class ;
+        rdfs:subClassOf  beawaros:City ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            beawaros:hasStreetName ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] .
+
+beawaros:BusStop117_004
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117004"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Ponto da Rua das Laranjeiras com Rua Rumania)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_005 .
+
+beawaros:BusStop117_017
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117017"^^xsd:string ;
+        beawaros:hasDescription      "R. das Laranjeiras, 540 - Cosme Velho, Rio de Janeiro - RJ, 22240-006 (Próximo a rua cosme velho)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_018 .
+
+beawaros:City  a  owl:Class .
+
+beawaros:BusStop  a      owl:Class ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            beawaros:hasDescription ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            beawaros:hasContextNetGroup ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onClass               beawaros:BusStop ;
+                           owl:onProperty            beawaros:hasNextBusStop ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                   owl:Restriction ;
+                           owl:onProperty      beawaros:hasBusPath ;
+                           owl:someValuesFrom  beawaros:BusPath
+                         ] ;
+        rdfs:subClassOf  [ a                   owl:Restriction ;
+                           owl:onProperty      beawaros:hasAssociateRegion ;
+                           owl:someValuesFrom  beawaros:Region
+                         ] .
+
+beawaros:BusStop117_011
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Centro ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117011"^^xsd:string ;
+        beawaros:hasDescription      "Centro, Rio de Janeiro - RJ, 20211-340 (Rua Moncorvo Filho, próximo ao hospital maternidade Maria Amélia)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_012 .
+
+beawaros:hasDescription
+        a             owl:DatatypeProperty ;
+        rdfs:comment  "Descreve qual e este ponto de onibus."^^xsd:string .
+
+beawaros:BusStop117_009
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Centro ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117009"^^xsd:string ;
+        beawaros:hasDescription      "Centro, Rio de Janeiro - RJ, 20211-130 (Ponto da Rua Benedito Hipólito com Rua Marquês de Pombal)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_010 .
+
+beawaros:hasNextBusStop
+        a             owl:ObjectProperty ;
+        rdfs:comment  "Todo ponto de onibus tem um proximo na sequencia."^^xsd:string ;
+        rdfs:domain   beawaros:BusStop ;
+        rdfs:range    beawaros:BusStop .
+
+beawaros:FloodingLarangeiras
+        a                            beawaros:Flooding , beawaros:DangerEvent , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasDescription      "Alagamento"^^xsd:string .
+
+beawaros:Nil  a       beawaros:BusStop , owl:NamedIndividual ;
+        rdfs:comment  "Se p ponto de onibus tem esse ponto como proximo, ele é o ponto final." .
+
+beawaros:BusStop117_003
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:CosmeVelho ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117003"^^xsd:string ;
+        beawaros:hasDescription      "R. Cosme Velho, 155 - Cosme Velho, Rio de Janeiro - RJ, 22241-125 (Em frente a faculdade Cesgranrio)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_004 .
+
+beawaros:Region  a       owl:Class ;
+        rdfs:comment     "Uma regiao é um bairro de uma cidade."^^xsd:string ;
+        rdfs:subClassOf  beawaros:City ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            beawaros:hasRegionName ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] .
+
+beawaros:BusStop117_016
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117016"^^xsd:string ;
+        beawaros:hasDescription      "R. das Laranjeiras, 486 - Laranjeiras, Rio de Janeiro - RJ, 22240-006 (Em frente ao centro educacional Mira Flores)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_017 .
+
+beawaros:BusPath  a      owl:Class ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onClass               beawaros:BusStop ;
+                           owl:onProperty            beawaros:hasInitialBusStop ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                   owl:Restriction ;
+                           owl:onProperty      beawaros:hasBus ;
+                           owl:someValuesFrom  beawaros:Bus
+                         ] .
+
+beawaros:BusStop117_010
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Centro ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117010"^^xsd:string ;
+        beawaros:hasDescription      "Centro, Rio de Janeiro - RJ, 20230-193 (Rua General Caldwell próximo a faculdade UNIESP)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_011 .
+
+beawaros:BusStop117_008
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117008"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 22240-004 (Rua Ipiranga)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_009 .
+
+beawaros:BusPath117  a               beawaros:BusPath , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras , beawaros:CosmeVelho , beawaros:Centro ;
+        beawaros:hasBus              beawaros:Bus117 ;
+        beawaros:hasBusStop          beawaros:BusStop117_001 .
+
+beawaros:BusStop117_002
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:CosmeVelho ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117002"^^xsd:string ;
+        beawaros:hasDescription      "Cosme Velho, Rio de Janeiro - RJ, 22241-125 (Ponto da Rua cosme velho com Rua Ererê)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_003 .
+
+beawaros:BusStop117_015
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117015"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 23823-040 (Ponto da Rua das Laranjeiras com Rua Cardoso Junior)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_016 .
+
+beawaros:hasRegionName
+        a             owl:DatatypeProperty ;
+        rdfs:comment  "Nome da regiao"^^xsd:string ;
+        rdfs:domain   beawaros:Region .
+
+beawaros:hasBusStop  a  owl:ObjectProperty ;
+        rdfs:range  beawaros:BusStop .
+
+beawaros:Centro  a              beawaros:Region , owl:NamedIndividual ;
+        beawaros:hasRegionName  "Centro"^^xsd:string .
+
+beawaros:BusStop117_007
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117007"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 22240-004 (Ponto da Rua das Laranjeiras com Rua Soares Cabral)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_008 .
+
+beawaros:GunShots  a     owl:Class ;
+        rdfs:subClassOf  beawaros:DangerEvent .
+
+beawaros:CosmeVelho  a          beawaros:Region , owl:NamedIndividual ;
+        beawaros:hasRegionName  "Cosme Velho"^^xsd:string .
+
+beawaros:BusStop117_001
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:CosmeVelho ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117001"^^xsd:string ;
+        beawaros:hasDescription      "Rodoviária do Cosme Velho - R. Cosme Velho - Cosme Velho, Rio de Janeiro - RJ"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_002 .
+
+beawaros:hasInitialBusStop
+        a            owl:ObjectProperty ;
+        rdfs:domain  beawaros:BusPath ;
+        rdfs:range   beawaros:BusStop .
+
+beawaros:hasBusPath  a  owl:ObjectProperty ;
+        rdfs:domain  beawaros:BusStop ;
+        rdfs:range   beawaros:BusPath .
+
+beawaros:BusStop117_014
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117014"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Ponto da Rua das Laranjeiras próximo a rua Leite Leal)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_015 .
+
+beawaros:Flooding  a     owl:Class ;
+        rdfs:subClassOf  beawaros:DangerEvent .
+
+beawaros:Larangeiras  a         beawaros:Region , owl:NamedIndividual ;
+        beawaros:hasRegionName  "Larangeiras"^^xsd:string .
+
+beawaros:Raid  a         owl:Class ;
+        rdfs:subClassOf  beawaros:DangerEvent .
+
+beawaros:hasBus  a   owl:ObjectProperty ;
+        rdfs:domain  beawaros:BusPath ;
+        rdfs:range   beawaros:Bus .
+
+beawaros:Bus117  a             beawaros:Bus , owl:NamedIndividual ;
+        beawaros:aproximating  beawaros:BusStop117_001 ;
+        beawaros:hasBusNumber  "117"^^xsd:string .
+
+beawaros:BusStop117_006
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117006"^^xsd:string ;
+        beawaros:hasDescription      "Laranjeiras, Rio de Janeiro - RJ, 22240-005 (Rua das laranjeiras em frente a Escola Municipal Jose de Alencar)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:BusStop117_007 .
+
+beawaros:BusStop117_019
+        a                            beawaros:BusStop , owl:NamedIndividual ;
+        beawaros:hasAssociateRegion  beawaros:CosmeVelho ;
+        beawaros:hasBusPath          beawaros:BusPath117 ;
+        beawaros:hasContextNetGroup  "117019"^^xsd:string ;
+        beawaros:hasDescription      "R. Cosme Velho, 430 - Cosme Velho, Rio de Janeiro - RJ, 22241-090 (Ponto da Rua cosme velho com Rua Ererê)"^^xsd:string ;
+        beawaros:hasNextBusStop      beawaros:Nil .
+
+beawaros:hasAssociateRegion
+        a             owl:ObjectProperty ;
+        rdfs:comment  "A regiao associada a uma determinada rua."^^xsd:string ;
+        rdfs:domain   beawaros:Street .
