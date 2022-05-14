@@ -262,6 +262,7 @@ public class Query implements Cloneable
 		_staticDatabases.add(input.toUri().toString());
 	}
 
+	
 	public void add_staticDatabaseUnix(String staticDatabaseFolder, String fileName)
 	{
 		//String rootPath = "";// Thread.currentThread().getContextClassLoader().getResource("").getPath();
