@@ -1,0 +1,27 @@
+REGISTER STREAM SCheckBus AS
+PREFIX ex: <http://example.org>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX beawaros: <http://beawaros.org/businfokb#>
+CONSTRUCT {
+    ?bus sioc:id ?busNumber .
+    ?busPath beawaros:hasBus ?bus .  
+    ?busPath beawaros:hasAssociateRegion ?region .
+    ?dangerEvent beawaros:hasAssociateRegion ?region .
+    ?dangerEvent beawaros:hasDescription ?description .
+    }
+FROM STREAM <http://example.org> [RANGE TRIPLES 1]
+FROM <file:///Users/vitor/git-repository/DSCEP-github/scep-operator/examples/beawaros.rdf>
+WHERE
+{   
+    ?bus beawaros:hasBusNumber ?busNumber .
+    ?bus beawaros:aproximating ?busStop .
+    ?bus rdf:type beawaros:Bus .
+    ?busPath beawaros:hasBus ?bus .  
+    ?busPath beawaros:hasAssociateRegion ?region .
+    ?busPath rdf:type beawaros:BusPath .
+    ?dangerEvent beawaros:hasAssociateRegion ?region .
+    ?dangerEvent beawaros:hasDescription ?description .
+    ?dangerEvent rdf:type beawaros:DangerEvent .
+}

@@ -103,6 +103,7 @@ public class AggregatorGen
      */
     public void addNewStreamSnip(String jsonStreamSnip)
     {
+        System.out.println("--------------- Aggregator ---------------");
         System.out.println("New stream snip arrived for aggregator of node: "+_nodeID);
         System.out.println(jsonStreamSnip);
         // Ver quem produziu esse pedaço de stream
@@ -651,6 +652,7 @@ public class AggregatorGen
             _logger.debug("AggregatorBlocksName {} - TimeToProcess {}", _aggregatorID, timeToProcess );
             System.out.println("Aggregator: Enviando stream para query "+queryInfo.get_queryID());
             System.out.println("Aggregator: Stream tem "+triples.getTotalNumberOfTriples()+" triplas");
+            System.out.println("---------------");
 
         } catch (ExecutionException e) {
             _logger.info("Aggregator: Error in sending record");
@@ -688,16 +690,18 @@ public class AggregatorGen
                 _aggregatorID,
                 false); // The query/aggregator/initialStream that produced this snip.
 
+        System.out.println("Aggregator: Enviando stream para query "+queryInfo.get_queryID());
+        System.out.println("Aggregator: Stream tem "+triples.size()+" triplas");
         final ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(topicName, jsonStream.toString());
 
         try
         {
             RecordMetadata metadata = producer.send(record).get();
-            System.out.println("Aggregator: Record sent with key " + _msgsSentCount + " to partition " + metadata.partition()
-                    + " with offset " + metadata.offset());
+            //System.out.println("Aggregator: Record sent with key " + _msgsSentCount + " to partition " + metadata.partition()
+            //        + " with offset " + metadata.offset());
             _msgsSentCount++;
-            System.out.println("Aggregator: Enviando stream para query "+queryInfo.get_queryID());
-            System.out.println("Aggregator: Stream tem "+triples.size()+" triplas");
+            //System.out.println("Aggregator: Enviado stream para query "+queryInfo.get_queryID());
+            //System.out.println("Aggregator: Stream tem "+triples.size()+" triplas");
 
         } catch (ExecutionException e) {
             _logger.info("Aggregator: Error in sending record");

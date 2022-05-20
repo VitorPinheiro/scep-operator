@@ -46,7 +46,7 @@ public class NodeManagerBasic
 	 */
     public static void main( String[] args )
     {
-    	int queryID = 12; // 14 // 13 - 2000 window / 12 - 1000 window
+    	int queryID = 12;
     	logger.info("------------------------ Execution Starting --------------------------");
     	System.out.println("------------------------ Execution Starting --------------------------");
     	logger.info("NodeManagerBasic for query {} initiating", queryID);

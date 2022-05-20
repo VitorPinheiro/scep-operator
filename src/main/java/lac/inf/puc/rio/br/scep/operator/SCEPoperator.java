@@ -123,14 +123,18 @@ public class SCEPoperator extends AbstractSCEPoperator
     	int parentesisBegin = subString.indexOf("<");
     	int parentesisEnd = subString.indexOf(">");
     	
-    	String streamIri = subString.substring(parentesisBegin+1, parentesisEnd-1);
+    	//String streamIri = subString.substring(parentesisBegin+1, parentesisEnd-1);
+		String streamIri = subString.substring(parentesisBegin+1, parentesisEnd);
+
+
     	
     	if(streamIri == null)
     	{
-    		_utils.error("A query "+query.get_queryID()+" nao uma Iri para sua STREAM.");
+    		_utils.error("A query "+query.get_queryID()+" nao tem uma Iri para sua STREAM.");
     		return;
     	}
-    	
+
+		System.out.println("VITOR 3: "+streamIri);
     	_queriesStreamIri.put(query.get_queryID(), streamIri);
 	}
 	
@@ -204,8 +208,10 @@ public class SCEPoperator extends AbstractSCEPoperator
 		{	
 			if(!_queries.containsKey(queryID))
 			{
-				addStaticDBsToCS_Engine(query);	
+				addStaticDBsToCS_Engine(query);
+				System.out.println("VITOR 1");
 				setStreamIriFromQuery(query);
+				System.out.println("VITOR 2");
 				initializeOutputFiles(queryID, _name);
 				
 				RdfStream _stream = new RdfStream(_queriesStreamIri.get(queryID));

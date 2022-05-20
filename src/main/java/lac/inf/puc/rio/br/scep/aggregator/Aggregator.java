@@ -106,14 +106,14 @@ public class Aggregator
 			_idleTime.put(query.get_queryID(), null);
 			_dataSent.put(query.get_queryID(), true);
 			
-			//System.out.println("Aggregator: Starting consumer for query "+query.get_queryID()+" with consumer group name: "+consumerName);
+			System.out.println("Aggregator: Starting consumer for query "+query.get_queryID()+" with consumer group name: "+consumerName);
 			
 			// WARINNG: O METODO PARA AQUI. ESSE runConsumer PUXA O PROCESSAMENTO.
 			// TODO: O programa para aqui, preciso fazer com que esse consumer seja uma thread separada.
 			// Pq se nao ele nao continua o processamento e o operador nao starta.
 			// Cada consumer diferente precisa ser uma thread diferente, acho eu.
 			runConsumer(query.get_inputStreamsIDs(), consumerName); 
-			//System.out.println("Aggregator consumer started.");			
+			System.out.println("Aggregator consumer started.");
 		}
 	}
 	

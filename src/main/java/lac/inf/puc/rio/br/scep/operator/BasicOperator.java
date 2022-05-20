@@ -309,7 +309,7 @@ public class BasicOperator extends AbstractSCEPoperator
             // https://stackify.com/heres-how-to-calculate-elapsed-time-in-java/
             Instant start = Instant.now();
 
-            System.out.println("_query.get_query() = "+_query.get_query());
+            //System.out.println("_query.get_query() = "+_query.get_query());
             Model model2 = QueryExecutionFactory.create( _query.get_query(), _model ).execConstruct();
 
             //model2.write(System.out, "TTL") ;
@@ -386,7 +386,8 @@ public class BasicOperator extends AbstractSCEPoperator
             _model.remove(windowStatments.get(i));
         }
 
-        System.out.println("BasicOperator "+_name+": appendData done");
+        System.out.println("BasicOperator"+_name+": appendData done");
+        System.out.println("---------------");
     }
 
     /**
@@ -542,24 +543,24 @@ public class BasicOperator extends AbstractSCEPoperator
             //System.out.println("postID = "+postID);
             // Replace postID number with the postID number to extract.
             String constructContentTemplate = query.getConstructContent();
-            System.out.println("constructContentTemplate = "+constructContentTemplate);
+            //System.out.println("constructContentTemplate = "+constructContentTemplate);
 
             String temp = constructContentTemplate.replaceFirst("(sioc:id)(\\s*)((\\S+)[^.])", "sioc:id \""+msgID+"\" .");
             String constructContent = temp.replaceFirst("[.][.]", ".");
 
             constructContent = constructContent.replaceAll("(\\^\\^http://www\\.w3\\.org/2001/XMLSchema#)([^\\\"]+)", "");
-            System.out.println("constructContent = "+constructContent);
+            //System.out.println("constructContent = "+constructContent);
 
             // TODO: Precisa colocar um OPTIONAL clause por tripla! Não é o bloco que é opcional, é cada tripla.
             // Vai ficar lento a query, mas é o jeito.
             String whereContent = query.getWhereBlock(constructContent);
-            System.out.println("whereContent = "+whereContent);
+            //System.out.println("whereContent = "+whereContent);
 
             String queryToGetRdfGraphs = "construct { "+constructContent+" }  where { "+whereContent+" }";
 
-            System.out.println("------------------");
-            System.out.println(query.getQueryPREFIX()+queryToGetRdfGraphs);
-            System.out.println("------------------");
+            //System.out.println("------------------");
+            //System.out.println(query.getQueryPREFIX()+queryToGetRdfGraphs);
+            //System.out.println("------------------");
 
             Model model2 = QueryExecutionFactory.create( query.getQueryPREFIX()+queryToGetRdfGraphs, answerTriples).execConstruct();
 
@@ -687,6 +688,8 @@ public class BasicOperator extends AbstractSCEPoperator
                 final ConsumerRecords<Integer, String> consumerRecords = _consumer.poll(Duration.ofMillis(Long.MAX_VALUE));
 
                 for (ConsumerRecord<Integer, String> record : consumerRecords) {
+
+                    System.out.println("--------------- BasicOperator ---------------");
                     //System.out.println("Record Key " + record.key());
                     //System.out.println("Consumer: Record value " + record.value());
                     _logger.debug("Consumer received: Record value " + record.value());
