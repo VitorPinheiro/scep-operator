@@ -70,7 +70,7 @@ public class WriterToFile
 	public void writeToJsonOutFile(String json, int executionNum)
 	{
 		String fileName = _jsonFileName+"_ex_"+executionNum+_jsonFile;
-		//System.out.println("Writing to this file = "+_filePath+fileName);
+		System.out.println("Writing to this file = "+_filePath+fileName);
 		PrintWriter out = null;
 		try
 		{

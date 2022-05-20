@@ -136,7 +136,8 @@ public class QueryDatabase implements IQueryDatabase
 		query.set_queryID(12);
 		//query.set_queryToSelectMsgID("select distinct ?msgID WHERE { ?tweet sioc:id ?msgID  } ");
 
-		query.add_staticDatabase("/Users/vitor/git-repository/DSCEP-github/scep-operator/examples/", "beawaros.rdf");
+		//query.add_staticDatabase("/Users/vitor/git-repository/DSCEP-github/scep-operator/examples/", "beawaros.rdf");
+		query.add_staticDatabase("examples/", "beawaros.rdf");
 		//query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
 		query.setProducesTriplesInBlock(true);
 		_queries.add(query);

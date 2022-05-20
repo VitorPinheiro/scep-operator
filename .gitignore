@@ -60,3 +60,4 @@ local.properties
 target/classes
 logs
 log
+target/test-classes

@@ -251,15 +251,18 @@ public class Query implements Cloneable
 	{
 		Path input = Paths.get(staticDatabaseFolder, fileName);
 
-		String rootPath = "";// Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		//String rootPath = "";// Thread.currentThread().getContextClassLoader().getResource("").getPath();
 		//String appConfigPath = "file://"+rootPath + staticDatabases; // "databases/db.rdf";
 		//String appConfigPath = staticDatabases; // "databases/db.rdf";
-		
+
+		String finalPathWindows = input.toUri().toString().replace("file://", "");
+
+		System.out.println("input.toUri().toString() = "+finalPathWindows);
 		if(_staticDatabases == null)
 		{
 			_staticDatabases = new ArrayList<String>();
 		}
-		_staticDatabases.add(input.toUri().toString());
+		_staticDatabases.add(finalPathWindows);
 	}
 	
 	public void add_staticDatabaseUnix(String staticDatabaseFolder, String fileName)
