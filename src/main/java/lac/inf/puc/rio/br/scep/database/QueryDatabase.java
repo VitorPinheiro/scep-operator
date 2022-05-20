@@ -130,8 +130,8 @@ public class QueryDatabase implements IQueryDatabase
 
 
 		query = new Query();
-		//query.set_query(readFileAsString("examples/checkDangerousBusTest.rq"), true);
-		query.set_query(readFileAsString("examples/checkDangerousBusTestCS.rq"), true); // CSparql
+		query.set_query(readFileAsString("examples/checkDangerousBusTest.rq"), true);
+		//query.set_query(readFileAsString("examples/checkDangerousBusTestCS.rq"), true); // CSparql
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
 		query.set_queryID(12);
 		//query.set_queryToSelectMsgID("select distinct ?msgID WHERE { ?tweet sioc:id ?msgID  } ");

@@ -425,37 +425,67 @@ public class AggregatorGen
                 {
                     // dif > 0 então pode ser que tenha mais de uma janela pra enviar
                     int numWindowsInSnip = (int) snipSize / windowSize;
-                    //System.out.println("Temos "+numWindowsInSnip+" janelas dentro deste snip.");
+                    System.out.println("Temos "+numWindowsInSnip+" janelas dentro deste snip.");
                     int numTriplesToSend = (numWindowsInSnip*windowSize);
 
-                    if( (numWindowsInSnip*windowSize) - snipSize == 0)
-                    { // Snip size é multiplo do tamanho da janela. Temos o numero de triplas certinho.
+                    // if( (numWindowsInSnip*windowSize) - snipSize == 0) // Snip size é multiplo do tamanho da janela. Temos o numero de triplas certinho no caso do CSPARQL.
+                    if( windowSize - snipSize == 0) // Temos uma janela certinho.
+                    {
                         triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(numTriplesToSend); // Já deleta as triplas que ele pega.
 
-                        if(!_extraTripleSent.get(queryInfo.get_queryID()))
+                        /*if(!_extraTripleSent.get(queryInfo.get_queryID()))
                         {
                             triplesToSendToOperator = addDummyTriple(triplesToSendToOperator);
-                        }
+                        }*/
+                        runProducer(triplesToSendToOperator, queryInfo);
 
                     }
                     else
-                    { // snip size maior do que o numero de triplas da janela
-                        if(_extraTripleSent.get(queryInfo.get_queryID()))
+                    { // snip size maior ou menor do que o numero de triplas da janela
+                        //if(_extraTripleSent.get(queryInfo.get_queryID()))
+                        //{
+                        //    System.out.println("Já adicionei dummy, nao preciso enviar mais do que o tamanho da janela.");
+                        //triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(numTriplesToSend); // Já deleta as triplas que ele pega.
+
+
+
+                        //}
+                        //else
+                        //{
+                        //    System.out.println("Não adicionei dummy, mas peguei uma triple extra da stream e mandei.");
+                        //    triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(numTriplesToSend+1); // Já deleta as triplas que ele pega.
+                        //}
+
+                        /*if (snipSize < windowSize)
+                        { // Caso chegue menos do que a janela, ele manda assim mesmo.
+                            triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(snipSize); // windowSize
+                            runProducer(triplesToSendToOperator, queryInfo);
+                        }*/
+
+                        int numTriplesToSendBuffer = numTriplesToSend;
+
+                        while (numTriplesToSendBuffer > 0)
                         {
-                            System.out.println("Já adicionei dummy, nao preciso enviar mais do que o tamanho da janela.");
-                            triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(numTriplesToSend); // Já deleta as triplas que ele pega.
+                            triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(windowSize); // windowSize
+                            runProducer(triplesToSendToOperator, queryInfo);
+
+                            numTriplesToSendBuffer = numTriplesToSendBuffer - windowSize;
+
+                            if(numTriplesToSendBuffer < 0)
+                            {
+                                numTriplesToSendBuffer = numTriplesToSendBuffer + windowSize;
+                                triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(numTriplesToSendBuffer); // windowSize
+                                runProducer(triplesToSendToOperator, queryInfo);
+                            }
                         }
-                        else
-                        {
-                            System.out.println("Não adicionei dummy, mas peguei uma triple extra da stream e mandei.");
-                            triplesToSendToOperator = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples(numTriplesToSend+1); // Já deleta as triplas que ele pega.
-                        }
+
+
                     }
 
-                    System.out.println("Triple extra foi = "+triplesToSendToOperator.get(triplesToSendToOperator.size()-1));
+                    //System.out.println("Triple extra foi = "+triplesToSendToOperator.get(triplesToSendToOperator.size()-1));
                     //_scepOpInstance.appendData(triplesToSendToOperator);
                     // TODO: SEND DATA TO OPERATOR
-                    runProducer(triplesToSendToOperator, queryInfo);
+
 
                     List<RdfQuadruple> triplesNotSent = _streamSnipToQuery.get(queryInfo.get_queryID()).getTriples();
                     System.out.println("Triplas que não foram enviadas ao operador ("+triplesNotSent.size()+"): "+triplesNotSent);
