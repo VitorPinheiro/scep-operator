@@ -59,3 +59,4 @@ local.properties
 
 target/classes
 logs
+log
