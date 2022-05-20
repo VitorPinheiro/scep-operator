@@ -1,9 +1,0 @@
-REGISTER STREAM SAttendingDoctorsNFA AS
-PREFIX ex: <http://example.org/>
-PREFIX onto: <file:///Users/vitor/git-repository/KAFKA/scep-operator/examples/>
-SELECT  ?a ?b ?c
-FROM STREAM <http://example.org> [RANGE TRIPLES 150]
-WHERE
-{
-    ?a ?b ?c
-}

@@ -643,7 +643,8 @@ public class AggregatorGen
 
             Long timeToProcess = System.currentTimeMillis() - _startTime.get(queryInfo.get_queryID());
 
-            _writerToFileToQuery.get(queryInfo.get_queryID()).writeToSpeedFileNewLine(timeToProcess.toString(), _msgsSentCount, _numTriplesIn, triples.getTotalNumberOfTriples());
+            // Register speed info
+            //_writerToFileToQuery.get(queryInfo.get_queryID()).writeToSpeedFileNewLine(timeToProcess.toString(), _msgsSentCount, _numTriplesIn, triples.getTotalNumberOfTriples());
             _msgsSentCount++;
             _dataSent.put(queryInfo.get_queryID(), true);
 

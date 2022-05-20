@@ -189,7 +189,7 @@ public class QueryDatabase implements IQueryDatabase
 		query.setProducesTriplesInBlock(true);
 		_queries.add(query);
 */
-		query = new Query();
+		/*query = new Query();
 		query.set_query(readFileAsString("examples/getMusicalArtistsOnlySimplified2.rq"), true);
 		query.add_inputStreamsByID("IS1"); // The associated aggregator uses it to create its consumer.
 		query.set_queryID(14); // antiga 7
@@ -197,7 +197,7 @@ public class QueryDatabase implements IQueryDatabase
 		//query.add_staticDatabase("E:\\gitprojects\\Tese\\scep-operator\\examples", "MusicalArtists.rdf");
 		//query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
 		query.setProducesTriplesInBlock(true);
-		_queries.add(query);
+		_queries.add(query);*/
 
 		/*query = new Query();
 		query.set_query(readFileAsString("examples/getTweetSubject.rq"));

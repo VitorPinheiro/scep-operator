@@ -145,7 +145,7 @@ public class BasicOperator extends AbstractSCEPoperator
         /**
          * Degug: Testar se adicionou tudo da janela na KB
          */
-        try{
+        /*try{
             File outputFile = new File("operator"+_name+"_modelTestAll"+_msgsSent+".ttl");
             OutputStream outStream = new FileOutputStream(outputFile);
             Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
@@ -156,7 +156,7 @@ public class BasicOperator extends AbstractSCEPoperator
             System.out.println("BasicOperator-"+_name+" Deu algo errado ai: "+e);
         }
 
-        System.out.println("BasicOperator-"+_name+": model object (KB + Window: persisted on file)");
+        System.out.println("BasicOperator-"+_name+": model object (KB + Window: persisted on file)");*/
 
         /**
          * Realiza a query no Model que contém o static database (KB) + a janela.
@@ -186,7 +186,7 @@ public class BasicOperator extends AbstractSCEPoperator
             /**
              * DEBUG: Just for printing the results - INICIO
              */
-            System.out.println("BasicOperator "+_name+": Writing results to file...");
+            /*System.out.println("BasicOperator "+_name+": Writing results to file...");
             try {
                 File outputFile = new File("operator"+_name+"QueryAnswer"+_msgsSent+".ttl");
                 OutputStream outStream = new FileOutputStream(outputFile);
@@ -196,7 +196,7 @@ public class BasicOperator extends AbstractSCEPoperator
             catch (Exception e)
             {
                 System.out.println("BasicOperator "+_name+": Deu erro ai na resposta da query (construct): "+e);
-            }
+            }*/
             /**
              * DEBUG: Just for printing the results - FIM
              */
@@ -212,7 +212,7 @@ public class BasicOperator extends AbstractSCEPoperator
                 runProducer(blockTriples);
 
                 Long procTime = System.currentTimeMillis() - getStartTime();
-                writeToFile(procTime.toString(), _executionNum, _numTriplesOut);
+                //writeToFile(procTime.toString(), _executionNum, _numTriplesOut);
                 resetStartTime();
                 _executionNum++;
             }
@@ -289,7 +289,7 @@ public class BasicOperator extends AbstractSCEPoperator
         /**
          * Degug: Testar se adicionou tudo da janela na KB
          */
-        try{
+        /*try{
             File outputFile = new File("operator"+_name+"_modelTestAll"+_msgsSent+".ttl");
             OutputStream outStream = new FileOutputStream(outputFile);
             Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
@@ -300,7 +300,7 @@ public class BasicOperator extends AbstractSCEPoperator
             System.out.println("BasicOperator-"+_name+" Deu algo errado ai: "+e);
         }
 
-        System.out.println("BasicOperator-"+_name+": model object (KB + Window: persisted on file)");
+        System.out.println("BasicOperator-"+_name+": model object (KB + Window: persisted on file)");*/
 
         /**
          * Realiza a query no Model que contém o static database (KB) + a janela.
@@ -335,7 +335,7 @@ public class BasicOperator extends AbstractSCEPoperator
             /**
              * DEBUG: Just for printing the results - INICIO
              */
-            System.out.println("BasicOperator "+_name+": Writing results to file...");
+            /*System.out.println("BasicOperator "+_name+": Writing results to file...");
             try {
                 File outputFile = new File("operator"+_name+"QueryAnswer"+_msgsSent+".ttl");
                 OutputStream outStream = new FileOutputStream(outputFile);
@@ -345,7 +345,7 @@ public class BasicOperator extends AbstractSCEPoperator
             catch (Exception e)
             {
                 System.out.println("BasicOperator "+_name+": Deu erro ai na resposta da query (construct): "+e);
-            }
+            }*/
             /**
              * DEBUG: Just for printing the results - FIM
              */
@@ -361,7 +361,7 @@ public class BasicOperator extends AbstractSCEPoperator
                 runProducer(blockTriples);
 
                 Long procTime = System.currentTimeMillis() - getStartTime();
-                writeToFile(procTime.toString(), _executionNum, _numTriplesOut);
+                //writeToFile(procTime.toString(), _executionNum, _numTriplesOut);
                 resetStartTime();
                 _executionNum++;
             }
@@ -510,7 +510,7 @@ public class BasicOperator extends AbstractSCEPoperator
         /**
          * DEBUG: Just for printing the results - INICIO
          */
-        System.out.println("BasicOperator "+_name+":Writing results to file...");
+        /*System.out.println("BasicOperator "+_name+":Writing results to file...");
         try {
             File outputFile = new File("answer"+_name+"Result"+_msgsSent+".ttl");
             OutputStream outStream = new FileOutputStream(outputFile);
@@ -520,7 +520,7 @@ public class BasicOperator extends AbstractSCEPoperator
         catch (Exception e)
         {
             System.out.println("BasicOperator "+_name+":Deu erro ai na resposta da query (construct): "+e);
-        }
+        }*/
         /**
          * DEBUG: Just for printing the results - FIM
          */
