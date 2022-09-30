@@ -289,18 +289,21 @@ public class BasicOperator extends AbstractSCEPoperator
         /**
          * Degug: Testar se adicionou tudo da janela na KB
          */
-        /*try{
-            File outputFile = new File("operator"+_name+"_modelTestAll"+_msgsSent+".ttl");
-            OutputStream outStream = new FileOutputStream(outputFile);
-            Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
-            _model.write(writer, "TTL");
-        }
-        catch (Exception e)
+        if(_query.getIsDebugModeOn())
         {
-            System.out.println("BasicOperator-"+_name+" Deu algo errado ai: "+e);
-        }
+            try{
+                File outputFile = new File("operator"+_name+"_modelTestAll"+_msgsSent+".ttl");
+                OutputStream outStream = new FileOutputStream(outputFile);
+                Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
+                _model.write(writer, "TTL");
+            }
+            catch (Exception e)
+            {
+                System.out.println("BasicOperator-"+_name+" Deu algo errado ai: "+e);
+            }
 
-        System.out.println("BasicOperator-"+_name+": model object (KB + Window: persisted on file)");*/
+            System.out.println("BasicOperator-"+_name+": model object (KB + Window: persisted on file)");
+        }
 
         /**
          * Realiza a query no Model que contém o static database (KB) + a janela.
@@ -319,39 +322,43 @@ public class BasicOperator extends AbstractSCEPoperator
             System.out.println("Query executed by basic operator "+_name+" in "+timeElapsed.getSeconds()+ " secs.");
             _logger.debug("Query executed by basic operator "+_name+" in "+timeElapsed.getSeconds()+ " secs.");
 
-            // DEBUG: Só para conferir a resposta do processamento de cada janela em um arquivo
-            /*System.out.println("Writing results to file...");
-            try {
-                File outputFile = new File("queryAnswer.ttl");
-                OutputStream outStream = new FileOutputStream(outputFile);
-                Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
-                model2.write(writer, "TTL");
-            }
-            catch (Exception e)
-            {
-                System.out.println("Deu erro ai na resposta da query (construct): "+e);
-            }*/
 
             /**
-             * DEBUG: Just for printing the results - INICIO
+             * DEBUG: Just for printing the results of each window in a different file
              */
-            /*System.out.println("BasicOperator "+_name+": Writing results to file...");
-            try {
-                File outputFile = new File("operator"+_name+"QueryAnswer"+_msgsSent+".ttl");
-                OutputStream outStream = new FileOutputStream(outputFile);
-                Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
-                model2.write(writer, "TTL");
-            }
-            catch (Exception e)
+            if(_query.getIsDebugModeOn())
             {
-                System.out.println("BasicOperator "+_name+": Deu erro ai na resposta da query (construct): "+e);
-            }*/
-            /**
-             * DEBUG: Just for printing the results - FIM
-             */
+                System.out.println("BasicOperator "+_name+": Writing results to file...");
+                try {
+                    File outputFile = new File("operator"+_name+"QueryAnswer"+_msgsSent+".ttl");
+                    OutputStream outStream = new FileOutputStream(outputFile);
+                    Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
+                    model2.write(writer, "TTL");
+                }
+                catch (Exception e)
+                {
+                    System.out.println("BasicOperator "+_name+": Deu erro ai na resposta da query (construct): "+e);
+                }
+            }
 
             StreamSnipBlocks blockTriples = convertAnswerToTripleBlocks(model2,_query);
             _logger.debug("BasicOperator: Answer for query"+_query.get_queryID()+": "+blockTriples);
+
+            /**
+             * DEBUG: Print the query results, but now from the StreamSnipBlocks, which are generated from the model2 (SPARQL query answer)
+             */
+            if(_query.getIsDebugModeOn())
+            {
+                for(int i=0;i<blockTriples.getNumberOfBlocks();i++)
+                {
+                    List<RdfQuadruple> block = blockTriples.getBlockWithOutDeleting(i).getTriples();
+                    for(int j=0;j<block.size();j++)
+                    {
+                        _writerToFile.writeToTxtFile(block.get(j).toString());
+                    }
+                    _writerToFile.writeToTxtFile("-------------- Next Answer -------------");
+                }
+            }
 
 
             // Send with kafka
@@ -529,7 +536,7 @@ public class BasicOperator extends AbstractSCEPoperator
         ResultSet rs1 = QueryExecutionFactory.create( query.getQueryPREFIX()+queryMsgIds, answerTriples ).execSelect();
 
         ///////////////////////////////////////////////////////////////////////////////////////////
-        // STEP 2: Para cada um dos posts eu pego todas as triplas dele crio os RDFQuadruple,
+        // STEP 2: Para cada um dos sioc:id eu pego todas as triplas dele crio os RDFQuadruple,
         // usando o System.currentTimeMillis() como timestamp.
         ///////////////////////////////////////////////////////////////////////////////////////////
         StreamSnipBlocks allTriples = new StreamSnipBlocks();
@@ -540,7 +547,10 @@ public class BasicOperator extends AbstractSCEPoperator
             //String postID = postResult.get("postID").asResource().toString().replace("\\\\", ""); // asLiteral
             String msgID = postResult.get("msgID").asLiteral().toString(); // asLiteral
 
-            //System.out.println("postID = "+postID);
+            if(_query.getIsDebugModeOn()) {
+                System.out.println("msgID = " + msgID);
+            }
+
             // Replace postID number with the postID number to extract.
             String constructContentTemplate = query.getConstructContent();
             //System.out.println("constructContentTemplate = "+constructContentTemplate);
@@ -558,20 +568,32 @@ public class BasicOperator extends AbstractSCEPoperator
 
             String queryToGetRdfGraphs = "construct { "+constructContent+" }  where { "+whereContent+" }";
 
-            //System.out.println("------------------");
-            //System.out.println(query.getQueryPREFIX()+queryToGetRdfGraphs);
-            //System.out.println("------------------");
+            if(_query.getIsDebugModeOn())
+            {
+                System.out.println("------------------");
+                System.out.println(query.getQueryPREFIX()+queryToGetRdfGraphs);
+                System.out.println("------------------");
+            }
 
             Model model2 = QueryExecutionFactory.create( query.getQueryPREFIX()+queryToGetRdfGraphs, answerTriples).execConstruct();
 
             TriplesBlock postTriplesBlock = new TriplesBlock();
             StmtIterator it = model2.listStatements();
 
-            //System.out.println("postID = "+postID);
+            if(_query.getIsDebugModeOn())
+            {
+                System.out.println("msgID = "+msgID);
+            }
+
             //System.out.println("it.hasNext() = "+it.hasNext());
             while(it.hasNext())
             {
                 Statement stmt = it.nextStatement();
+
+                if(_query.getIsDebugModeOn())
+                {
+                    System.out.println("stmt = "+stmt.toString());
+                }
 
                 Triple t = stmt.asTriple();
 

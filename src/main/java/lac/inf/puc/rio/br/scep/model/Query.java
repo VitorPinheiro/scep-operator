@@ -35,6 +35,11 @@ public class Query implements Cloneable
 	 * Pode ser em minutos ou em numero de eventos
 	 */
 	private WindowType _windowType;
+
+	/**
+	 * Indica se a query vai ser executada em modo debug ou não.
+	 */
+	private Boolean _isDebugModeOn;
 	
 	/**
 	 * 
@@ -71,12 +76,23 @@ public class Query implements Cloneable
 		producesTriplesInBlocks = false;
 		_constructContent = null;
 		_whereContent = null;
+		_isDebugModeOn = false;
 	}
 	
 	/**
 	 * The static databases that the query needs access.
 	 */
 	private ArrayList<String> _staticDatabases;
+
+	public boolean getIsDebugModeOn()
+	{
+		return _isDebugModeOn;
+	}
+
+	public void setIsDebugModeOn(Boolean isDebugModeOn)
+	{
+		_isDebugModeOn = isDebugModeOn;
+	}
 	
 	public boolean getProducesTriplesInBlock()
 	{
@@ -382,9 +398,13 @@ public class Query implements Cloneable
     	for(int i=0; i<statments.length;i++)
     	{
     		statments[i] = statments[i].trim();
-    		
+
+    		// TODO: Adicionar o OPTIONAL em todas as triplas do where pode gerar triplas falsas no contruct, se existir construct com rdf:type type (fixos).
+			// Mais informações issue github
     		if(!statments[i].contains(_blockIdentificator))
-    			statments[i] = "OPTIONAL{"+statments[i]+"}";
+    			if(!statments[i].trim().equalsIgnoreCase("")) {
+					statments[i] = "OPTIONAL{" + statments[i] + "}";
+				}
     		else
     			statments[i] = statments[i] + " .";
     	}    	

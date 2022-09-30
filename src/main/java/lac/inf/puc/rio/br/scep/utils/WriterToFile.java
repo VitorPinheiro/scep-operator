@@ -20,6 +20,8 @@ public class WriterToFile
 	private String _speedFile = "Speed.txt";	
 	private String _jsonFile = "jsonOut.json";
 
+	private String _txtFile = "Debug.txt";
+
 	private String _tweetsFile = "Tweets.txt";
 	
 	public WriterToFile(String callerName)
@@ -86,6 +88,36 @@ public class WriterToFile
 			if (out != null) {
 		        out.close();
 		    }
+		}
+	}
+
+
+	/**
+	 * Function used for debuging.
+	 * It only adds the string data to the final of the text file.
+	 *
+	 * @param data
+	 */
+	public void writeToTxtFile(String data)
+	{
+		String fileName = _txtFile;
+		System.out.println("(Debug) Writing to this file = "+_filePath+fileName);
+		PrintWriter out = null;
+		try
+		{
+			out = new PrintWriter(new BufferedWriter(new FileWriter(_filePath+fileName, true)));
+			out.append(data);
+			out.println();
+		}
+		catch (IOException e)
+		{
+			System.err.println(e);
+		}
+		finally
+		{
+			if (out != null) {
+				out.close();
+			}
 		}
 	}
 

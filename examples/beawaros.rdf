@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://beawaros.org/businfokb#"
      xml:base="http://beawaros.org/businfokb"
+     xmlns:ns="http://rdfs.org/sioc/ns#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
@@ -126,6 +127,12 @@
     
 
 
+    <!-- http://rdfs.org/sioc/ns#id -->
+
+    <owl:DatatypeProperty rdf:about="http://rdfs.org/sioc/ns#id"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -153,6 +160,7 @@
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Toda instancia da classe bus precisa de um sioc:id, pra poder ser reconhecido pela aplicacao SCEP. Na hora de criar os rdf graphs, ele procura pelo sioc:id.</rdfs:comment>
     </owl:Class>
     
 
@@ -323,6 +331,7 @@
     <owl:NamedIndividual rdf:about="http://beawaros.org/businfokb#Bus117">
         <rdf:type rdf:resource="http://beawaros.org/businfokb#Bus"/>
         <hasBusNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117</hasBusNumber>
+        <ns:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117</ns:id>
     </owl:NamedIndividual>
     
 

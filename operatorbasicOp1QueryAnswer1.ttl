@@ -1,0 +1,19 @@
+@prefix :      <http://beawaros.org/businfokb#> .
+@prefix ns:    <http://rdfs.org/sioc/ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix beawaros: <http://beawaros.org/businfokb#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+
+beawaros:Bus117  a  beawaros:Bus ;
+        sioc:id  "117"^^xsd:string .
+
+beawaros:FloodingLarangeiras
+        beawaros:hasAssociateRegion  beawaros:Larangeiras ;
+        beawaros:hasDescription      "Alagamento"^^xsd:string .
+
+beawaros:BusPath117  beawaros:hasAssociateRegion
+                beawaros:Larangeiras ;
+        beawaros:hasBus              beawaros:Bus117 .

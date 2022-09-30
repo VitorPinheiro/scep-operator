@@ -5,15 +5,17 @@ PREFIX beawaros: <http://beawaros.org/businfokb#>
 CONSTRUCT {
     ?bus sioc:id ?busNumber .
     ?busPath beawaros:hasBus ?bus .  
+    ?bus rdf:type beawaros:Bus .
     ?busPath beawaros:hasAssociateRegion ?region .
     ?dangerEvent beawaros:hasAssociateRegion ?region .
     ?dangerEvent beawaros:hasDescription ?description .
+    ?dangerEvent rdf:type beawaros:DangerEvent .
     }
 FROM STREAM <http://example.org> [RANGE TRIPLES 1]
 FROM <file:///Users/vitor/git-repository/DSCEP/scep-operator/examples/beawaros.rdf>
 WHERE
 {   
-    ?bus beawaros:hasBusNumber ?busNumber .
+    ?bus sioc:id ?busNumber .
     ?bus beawaros:aproximating ?busStop .
     ?bus rdf:type beawaros:Bus .
     ?busPath beawaros:hasBus ?bus .  
