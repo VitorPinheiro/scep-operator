@@ -58,7 +58,6 @@ import lac.inf.puc.rio.br.scep.model.TriplesBlock;
 import lac.inf.puc.rio.br.scep.operator.SCEPoperator;
 import lac.inf.puc.rio.br.scep.operator.constants.IOperatorConstants;
 import lac.inf.puc.rio.br.scep.utils.Utils;
-import lac.inf.puc.rio.br.scep.utils.IKafkaConstants;
 
 /**
  * @author vitor

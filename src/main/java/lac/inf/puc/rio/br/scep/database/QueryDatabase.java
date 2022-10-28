@@ -62,7 +62,7 @@ public class QueryDatabase implements IQueryDatabase
 		query.add_staticDatabase("examples/", "beawaros.rdf");
 		//query.add_staticDatabase("/opt/scep/scep-operator/target/classes/databases/MusicalArtists.rdf");
 		query.setProducesTriplesInBlock(true);
-		query.setIsDebugModeOn(true);
+		query.setIsDebugModeOn(false);
 		_queries.add(query);
 
 	}
